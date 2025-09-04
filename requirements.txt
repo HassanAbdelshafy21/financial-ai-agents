@@ -12,6 +12,7 @@ pydantic
 structlog
 langgraph
 langchain-core
+langchain-openai
 reportlab
 pytest
 pytest-asyncio

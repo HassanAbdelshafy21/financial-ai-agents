@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    container_name: financial-ai-app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8
+    container_name: financial-ai-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pickles
+      MYSQL_DATABASE: finai
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
