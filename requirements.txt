@@ -19,4 +19,3 @@ pytest-asyncio
 httpx[http2]
 ruff
 black
-pre-commit
