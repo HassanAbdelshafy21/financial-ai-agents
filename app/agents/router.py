@@ -14,12 +14,13 @@ router.include_router(auth_router, prefix="/auth", tags=["auth"])
 # Define the request schema
 class QueryRequest(BaseModel):
     query: str
+    thread_id: str = "default"
 
 
 # Endpoint: POST with JSON body
 @router.post("/query")
 async def query_agent(request: QueryRequest):
-    result = agent.invoke({"messages": [("user", request.query)]})
+    result = agent.invoke({"messages": [("user", request.query)]}, config={"configurable": {"thread_id": request.thread_id}})
     # Extract the final message
     final_message = result["messages"][-1].content if "messages" in result else result
     return {"answer": final_message}

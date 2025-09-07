@@ -3,6 +3,7 @@ from langgraph.prebuilt import create_react_agent
 from langchain_core.tools import tool
 from app.core.config import settings
 import math
+from langgraph.checkpoint.memory import MemorySaver
 from typing import List, Dict
 
 
@@ -333,6 +334,8 @@ def tax_calculator(income: float, filing_status: str = "single", state: str = "n
 
 # LLM
 llm = ChatOpenAI(model="gpt-4o-mini", api_key=settings.OPENAI_API_KEY)
+# Create checkpointer  
+checkpointer = MemorySaver()
 
 # Agent with all financial tools
 agent = create_react_agent(llm, [
@@ -345,4 +348,4 @@ agent = create_react_agent(llm, [
     debt_payoff_calculator,
     emergency_fund_calculator,
     tax_calculator
-])
+,], checkpointer=checkpointer)

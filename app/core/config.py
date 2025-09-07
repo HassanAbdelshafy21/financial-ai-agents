@@ -11,8 +11,8 @@ class Settings(BaseSettings):
     APP_ENV: str = "dev"
     SECRET_KEY: str = "change_me"
     JWT_EXPIRES_MIN: int = 60
-    DB_URI: str = "mysql+aiomysql://user:pass@localhost:3306/finai"
-    REDIS_URL: str = "redis://localhost:6379/0"
+    DB_URI: str = "mysql+aiomysql://user:pass@mysql:3306/finai"
+    REDIS_URL: str = "redis://redis:6379/0"
     SMTP_HOST: str = ""
     SMTP_PORT: int = 587
     SMTP_USER: str = ""
@@ -24,7 +24,7 @@ class Settings(BaseSettings):
     LANGCHAIN_TRACING_V2: bool = False  # 👈 stays as a bool
 
     # overwrite DB_URI for docker/local dev
-    DB_URI: str = "mysql+aiomysql://root:pickles@localhost:3307/finai"
+    DB_URI: str = "mysql+aiomysql://root:pickles@mysql:3306/finai"
 
     class Config:
         env_file = ".env"
