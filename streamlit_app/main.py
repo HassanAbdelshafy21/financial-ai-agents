@@ -1,5 +1,6 @@
 import streamlit as st
-from utils.api_client import login, register, query_agent, create_chat, save_message
+from utils.api_client import login, register, query_agent, create_chat, save_message, generate_report
+from datetime import datetime   
 
 st.title("Financial AI Agents")
 
@@ -86,10 +87,31 @@ if st.session_state.logged_in:
             else:
                 st.error(f"Error: {response['error']}")
 
-                with tab2:
-                 st.write("Upload financial data functionality will go here")
-                with tab3:
-                 st.write("Reports functionality will go here")
+    with tab2:
+                    st.write("Upload financial data functionality will go here")
+    with tab3:
+                    st.subheader("Financial Reports")
+                    st.write("Generate comprehensive financial reports based on your data and conversations.")
+
+                    if st.button("Generate PDF Report"):
+                        if st.session_state.get("auth_token"):
+                            with st.spinner("Generating your financial report..."):
+                                result = generate_report(st.session_state.auth_token)
+
+                            if result["success"]:
+                                # Offer the PDF as a download
+                                st.download_button(
+                                    label="Download Financial Report",
+                                    data=result["data"],
+                                    file_name=f"financial_report_{datetime.now().strftime('%Y%m%d')}.pdf",
+                                    mime="application/pdf"
+                                )
+                                st.success("Report generated successfully!")
+                            else:
+                                st.error(f"Failed to generate report: {result['error']}")
+                        else:
+                            st.error("Please log in to generate reports")
+
 else:
     # Authentication tabs
     auth_tab1, auth_tab2 = st.tabs(["Login", "Register"])

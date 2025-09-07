@@ -140,3 +140,17 @@ def save_message(chat_id: int, role: str, content: str, token: str):
             return {"success": False, "error": f"HTTP {response.status_code}"}
     except Exception as e:
         return {"success": False, "error": str(e)}
+    
+def generate_report(token: str):
+    try:
+        response = httpx.post(
+            f"{BASE_URL}/api/v1/reports/generate",
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=30.0
+        )
+        if response.status_code == 200:
+            return {"success": True, "data": response.content}
+        else:
+            return {"success": False, "error": f"HTTP {response.status_code}"}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
