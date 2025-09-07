@@ -58,7 +58,7 @@ Edit `.env` file with your settings:
 APP_ENV=dev
 SECRET_KEY=your_secret_key_here
 JWT_EXPIRES_MIN=60
-DB_URI=mysql+aiomysql://root:pickles@mysql:3306/finai
+DB_URI=mysql+aiomysql://root:urpassword@mysql:3306/finai
 REDIS_URL=redis://redis:6379/0
 OPENAI_API_KEY=your_openai_api_key_here
 SMTP_HOST=
